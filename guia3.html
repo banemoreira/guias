@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo de Flexbox e Grid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .guide-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .guide-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            color: #4a5568;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .controls-panel {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .control-group {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-label {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .control-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .control-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .control-range {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .range-value {
+            font-size: 12px;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            min-height: 300px;
+        }
+
+        .code-display {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-display::before {
+            content: 'CSS Gerado';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* Flexbox Demo Styles */
+        .flex-container {
+            background: #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            min-height: 200px;
+            position: relative;
+        }
+
+        .flex-item {
+            background: #38a169;
+            color: white;
+            padding: 15px;
+            margin: 5px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flex-item:nth-child(2) {
+            background: #e53e3e;
+        }
+
+        .flex-item:nth-child(3) {
+            background: #d69e2e;
+        }
+
+        .flex-item:nth-child(4) {
+            background: #805ad5;
+        }
+
+        .flex-item:nth-child(5) {
+            background: #dd6b20;
+        }
+
+        /* Grid Demo Styles */
+        .grid-container {
+            background: #764ba2;
+            border-radius: 8px;
+            padding: 20px;
+            display: grid;
+            min-height: 300px;
+            gap: 10px;
+        }
+
+        .grid-item {
+            background: #38a169;
+            color: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-item:nth-child(2) {
+            background: #e53e3e;
+        }
+
+        .grid-item:nth-child(3) {
+            background: #d69e2e;
+        }
+
+        .grid-item:nth-child(4) {
+            background: #805ad5;
+        }
+
+        .grid-item:nth-child(5) {
+            background: #dd6b20;
+        }
+
+        .grid-item:nth-child(6) {
+            background: #3182ce;
+        }
+
+        .toggle-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .toggle-btn.active {
+            background: #38a169;
+            box-shadow: 0 4px 15px rgba(56, 161, 105, 0.4);
+        }
+
+        .property-info {
+            background: #e6fffa;
+            border-left: 4px solid #38a169;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+        }
+
+        .property-info h4 {
+            color: #38a169;
+            margin-bottom: 5px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tab {
+            background: none;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #4a5568;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            font-weight: 600;
+        }
+
+        .tab:hover {
+            background: #f7fafc;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .guide-section {
+                padding: 20px;
+            }
+
+            .controls-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab {
+                text-align: left;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .guide-section {
+            animation: slideIn 0.6s ease-out;
+        }
+
+        /* Additional utility classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Guia Interativo de Flexbox e Grid</h1>
+            <p>Domine layouts modernos com visualizadores interativos e controles em tempo real</p>
+        </header>
+
+        <!-- Tabs para alternar entre Flexbox e Grid -->
+        <section class="guide-section">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('flexbox')">🔧 Flexbox</button>
+                <button class="tab" onclick="switchTab('grid')">⚡ CSS Grid</button>
+                <button class="tab" onclick="switchTab('comparison')">⚖️ Comparação</button>
+            </div>
+
+            <!-- Flexbox Content -->
+            <div id="flexbox-content" class="tab-content active">
+                <h2 class="section-title">Visualizador Flexbox Interativo</h2>
+
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <div class="control-label">flex-direction</div>
+                        <select class="control-select" id="flex-direction" onchange="updateFlexbox()">
+                            <option value="row">row</option>
+                            <option value="column">column</option>
+                            <option value="row-reverse">row-reverse</option>
+                            <option value="column-reverse">column-reverse</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">justify-content</div>
+                        <select class="control-select" id="justify-content" onchange="updateFlexbox()">
+                            <option value="flex-start">flex-start</option>
+                            <option value="center">center</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="space-between">space-between</option>
+                            <option value="space-around">space-around</option>
+                            <option value="space-evenly">space-evenly</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">align-items</div>
+                        <select class="control-select" id="align-items" onchange="updateFlexbox()">
+                            <option value="stretch">stretch</option>
+                            <option value="flex-start">flex-start</option>
+                            <option value="center">center</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="baseline">baseline</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">flex-wrap</div>
+                        <select class="control-select" id="flex-wrap" onchange="updateFlexbox()">
+                            <option value="nowrap">nowrap</option>
+                            <option value="wrap">wrap</option>
+                            <option value="wrap-reverse">wrap-reverse</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">gap: <span class="range-value" id="flex-gap-value">10px</span></div>
+                        <input type="range" class="control-range" id="flex-gap" min="0" max="50" value="10"
+                            oninput="updateFlexbox()">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">Número de itens</div>
+                        <input type="range" class="control-range" id="flex-items-count" min="2" max="8" value="5"
+                            oninput="updateFlexbox()">
+                        <div class="range-value" id="flex-items-value">5 itens</div>
+                    </div>
+                </div>
+
+                <div class="demo-area">
+                    <div id="flex-demo" class="flex-container">
+                        <div class="flex-item">1</div>
+                        <div class="flex-item">2</div>
+                        <div class="flex-item">3</div>
+                        <div class="flex-item">4</div>
+                        <div class="flex-item">5</div>
+                    </div>
+                </div>
+
+                <div class="code-display" id="flex-code">
+                    .container {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: stretch;
+                    flex-wrap: nowrap;
+                    gap: 10px;
+                    }
+                </div>
+
+                <div class="property-info">
+                    <h4>💡 Dica:</h4>
+                    <p>O Flexbox é ideal para layouts unidimensionais (linha ou coluna). Use <span
+                            class="highlight">justify-content</span> para alinhamento no eixo principal e <span
+                            class="highlight">align-items</span> para o eixo transversal.</p>
+                </div>
+            </div>
+
+            <!-- Grid Content -->
+            <div id="grid-content" class="tab-content">
+                <h2 class="section-title">Visualizador CSS Grid Interativo</h2>
+
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <div class="control-label">grid-template-columns</div>
+                        <select class="control-select" id="grid-columns" onchange="updateGrid()">
+                            <option value="1fr 1fr">1fr 1fr</option>
+                            <option value="1fr 1fr 1fr">1fr 1fr 1fr</option>
+                            <option value="1fr 2fr 1fr">1fr 2fr 1fr</option>
+                            <option value="repeat(4, 1fr)">repeat(4, 1fr)</option>
+                            <option value="100px 1fr 100px">100px 1fr 100px</option>
+                            <option value="repeat(auto-fit, minmax(150px, 1fr))">auto-fit minmax(150px, 1fr)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">grid-template-rows</div>
+                        <select class="control-select" id="grid-rows" onchange="updateGrid()">
+                            <option value="auto">auto</option>
+                            <option value="1fr 1fr">1fr 1fr</option>
+                            <option value="100px 1fr">100px 1fr</option>
+                            <option value="repeat(3, 100px)">repeat(3, 100px)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">justify-items</div>
+                        <select class="control-select" id="grid-justify-items" onchange="updateGrid()">
+                            <option value="stretch">stretch</option>
+                            <option value="start">start</option>
+                            <option value="center">center</option>
+                            <option value="end">end</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">align-items</div>
+                        <select class="control-select" id="grid-align-items" onchange="updateGrid()">
+                            <option value="stretch">stretch</option>
+                            <option value="start">start</option>
+                            <option value="center">center</option>
+                            <option value="end">end</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">gap: <span class="range-value" id="grid-gap-value">10px</span></div>
+                        <input type="range" class="control-range" id="grid-gap" min="0" max="50" value="10"
+                            oninput="updateGrid()">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">Número de itens</div>
+                        <input type="range" class="control-range" id="grid-items-count" min="3" max="9" value="6"
+                            oninput="updateGrid()">
+                        <div class="range-value" id="grid-items-value">6 itens</div>
+                    </div>
+                </div>
+
+                <div class="demo-area">
+                    <div id="grid-demo" class="grid-container">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">5</div>
+                        <div class="grid-item">6</div>
+                    </div>
+                </div>
+
+                <div class="code-display" id="grid-code">
+                    .container {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: auto;
+                    justify-items: stretch;
+                    align-items: stretch;
+                    gap: 10px;
+                    }
+                </div>
+
+                <div class="property-info">
+                    <h4>💡 Dica:</h4>
+                    <p>O CSS Grid é perfeito para layouts bidimensionais. Use <span class="highlight">fr</span> para
+                        frações flexíveis e <span class="highlight">minmax()</span> para responsividade automática.</p>
+                </div>
+            </div>
+
+            <!-- Comparison Content -->
+            <div id="comparison-content" class="tab-content">
+                <h2 class="section-title">Flexbox vs CSS Grid</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                    <div
+                        style="background: #e6fffa; padding: 25px; border-radius: 10px; border-left: 4px solid #38a169;">
+                        <h3 style="color: #38a169; margin-bottom: 15px;">🔧 Flexbox</h3>
+                        <p><strong>Melhor para:</strong></p>
+                        <ul style="margin: 10px 0 15px 20px;">
+                            <li>Layouts unidimensionais</li>
+                            <li>Navegação horizontal</li>
+                            <li>Centrar elementos</li>
+                            <li>Distribuir espaço</li>
+                        </ul>
+                        <div class="demo-area" style="margin-top: 15px; min-height: 150px;">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; height: 100px; background: #667eea; border-radius: 8px; padding: 20px;">
+                                <div style="background: #38a169; color: white; padding: 15px; border-radius: 6px;">Logo
+                                </div>
+                                <div style="background: #38a169; color: white; padding: 15px; border-radius: 6px;">Menu
+                                </div>
+                                <div style="background: #38a169; color: white; padding: 15px; border-radius: 6px;">Login
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background: #fef5e7; padding: 25px; border-radius: 10px; border-left: 4px solid #d69e2e;">
+                        <h3 style="color: #d69e2e; margin-bottom: 15px;">⚡ CSS Grid</h3>
+                        <p><strong>Melhor para:</strong></p>
+                        <ul style="margin: 10px 0 15px 20px;">
+                            <li>Layouts bidimensionais</li>
+                            <li>Páginas complexas</li>
+                            <li>Cards e galerias</li>
+                            <li>Layouts responsivos</li>
+                        </ul>
+                        <div class="demo-area" style="margin-top: 15px; min-height: 150px;">
+                            <div
+                                style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 40px 1fr; gap: 10px; height: 100px; background: #764ba2; border-radius: 8px; padding: 20px;">
+                                <div
+                                    style="background: #d69e2e; color: white; border-radius: 6px; grid-column: 1 / -1; display: flex; align-items: center; justify-content: center;">
+                                    Header</div>
+                                <div
+                                    style="background: #d69e2e; color: white; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                                    Sidebar</div>
+                                <div
+                                    style="background: #d69e2e; color: white; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                                    Main</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-info">
+                    <h4>🎯 Quando usar cada um?</h4>
+                    <p><strong>Flexbox:</strong> Para componentes e pequenos layouts onde você precisa de flexibilidade
+                        em uma direção.</p>
+                    <p><strong>CSS Grid:</strong> Para layouts de página completos onde você precisa controlar linhas e
+                        colunas simultaneamente.</p>
+                    <p><strong>Juntos:</strong> Muitas vezes você usará Grid para o layout geral e Flexbox para
+                        componentes internos!</p>
+                </div>
+
+                <button class="toggle-btn" onclick="showPracticalExample()">Ver Exemplo Prático</button>
+
+                <div id="practical-example" style="display: none; margin-top: 20px;">
+                    <div class="demo-area">
+                        <div
+                            style="display: grid; grid-template-columns: 1fr 3fr; grid-template-rows: 60px 1fr 40px; gap: 15px; height: 400px; background: #f7fafc; padding: 20px; border-radius: 10px;">
+                            <!-- Header -->
+                            <div
+                                style="grid-column: 1 / -1; background: #667eea; color: white; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+                                <div style="font-weight: bold;">Meu Site</div>
+                                <div style="display: flex; gap: 15px;">
+                                    <span>Home</span>
+                                    <span>Sobre</span>
+                                    <span>Contato</span>
+                                </div>
+                            </div>
+                            <!-- Sidebar -->
+                            <div
+                                style="background: #38a169; color: white; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+                                <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 6px;">Menu
+                                    1</div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 6px;">Menu
+                                    2</div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 6px;">Menu
+                                    3</div>
+                            </div>
+                            <!-- Main Content -->
+                            <div
+                                style="background: #e6fffa; border-radius: 8px; padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div
+                                    style="background: white; padding: 15px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    Card 1</div>
+                                <div
+                                    style="background: white; padding: 15px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    Card 2</div>
+                                <div
+                                    style="background: white; padding: 15px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    Card 3</div>
+                                <div
+                                    style="background: white; padding: 15px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    Card 4</div>
+                            </div>
+                            <!-- Footer -->
+                            <div
+                                style="grid-column: 1 / -1; background: #4a5568; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center;">
+                                Footer - Grid para layout, Flexbox para componentes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Exercícios -->
+        <section class="guide-section">
+            <h2 class="section-title">🎮 Desafios Práticos</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div style="background: #f0fff4; border: 2px solid #38a169; border-radius: 10px; padding: 20px;">
+                    <h3 style="color: #38a169;">Desafio 1: Centro Perfeito</h3>
+                    <p>Use Flexbox para centralizar um elemento horizontal e verticalmente.</p>
+                    <button class="toggle-btn" onclick="showSolution(1)">Ver Solução</button>
+                    <div id="solution-1" style="display: none; margin-top: 15px;" class="code-display">
+                        .container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        }
+                    </div>
+                </div>
+
+                <div style="background: #fef5e7; border: 2px solid #d69e2e; border-radius: 10px; padding: 20px;">
+                    <h3 style="color: #d69e2e;">Desafio 2: Layout Responsivo</h3>
+                    <p>Crie um grid que se adapte automaticamente ao tamanho da tela.</p>
+                    <button class="toggle-btn" onclick="showSolution(2)">Ver Solução</button>
+                    <div id="solution-2" style="display: none; margin-top: 15px;" class="code-display">
+                        .container {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                        gap: 20px;
+                        }
+                    </div>
+                </div>
+
+                <div style="background: #ebf8ff; border: 2px solid #3182ce; border-radius: 10px; padding: 20px;">
+                    <h3 style="color: #3182ce;">Desafio 3: Holy Grail Layout</h3>
+                    <p>Implemente o famoso layout Holy Grail com CSS Grid.</p>
+                    <button class="toggle-btn" onclick="showSolution(3)">Ver Solução</button>
+                    <div id="solution-3" style="display: none; margin-top: 15px;" class="code-display">
+                        .container {
+                        display: grid;
+                        grid-template-columns: 200px 1fr 200px;
+                        grid-template-rows: auto 1fr auto;
+                        min-height: 100vh;
+                        }
+                        .header { grid-column: 1 / -1; }
+                        .footer { grid-column: 1 / -1; }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container text-center">
+            <p style="color: white; margin-top: 20px;">© 2025 Guia Interativo de Flexbox e Grid. Todos os direitos
+                reservados.</p>
+            <p style="color: white;">Feito com ❤️ para desenvolvedores web</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            // Remove active class from all tabs and contents
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active class to selected tab and content
+            event.target.classList.add('active');
+            document.getElementById(`${tabName}-content`).classList.add('active');
+        }
+
+        // Flexbox controls
+        function updateFlexbox() {
+            const container = document.getElementById('flex-demo');
+            const code = document.getElementById('flex-code');
+
+            // Get values
+            const direction = document.getElementById('flex-direction').value;
+            const justifyContent = document.getElementById('justify-content').value;
+            const alignItems = document.getElementById('align-items').value;
+            const flexWrap = document.getElementById('flex-wrap').value;
+            const gap = document.getElementById('flex-gap').value;
+            const itemsCount = document.getElementById('flex-items-count').value;
+
+            // Update range value displays
+            document.getElementById('flex-gap-value').textContent = `${gap}px`;
+            document.getElementById('flex-items-value').textContent = `${itemsCount} itens`;
+
+            // Apply styles
+            container.style.flexDirection = direction;
+            container.style.justifyContent = justifyContent;
+            container.style.alignItems = alignItems;
+            container.style.flexWrap = flexWrap;
+            container.style.gap = `${gap}px`;
+
+            // Update items count
+            const currentItems = container.children.length;
+            if (currentItems < itemsCount) {
+                for (let i = currentItems; i < itemsCount; i++) {
+                    const item = document.createElement('div');
+                    item.className = 'flex-item';
+                    item.textContent = i + 1;
+                    container.appendChild(item);
+                }
+            } else if (currentItems > itemsCount) {
+                for (let i = currentItems; i > itemsCount; i--) {
+                    container.removeChild(container.lastChild);
+                }
+            }
+
+            // Update code display
+            code.textContent = `.container {
+    display: flex;
+    flex-direction: ${direction};
+    justify-content: ${justifyContent};
+    align-items: ${alignItems};
+    flex-wrap: ${flexWrap};
+    gap: ${gap}px;
+}`;
+        }
+
+        // Grid controls
+        function updateGrid() {
+            const container = document.getElementById('grid-demo');
+            const code = document.getElementById('grid-code');
+
+            // Get values
+            const columns = document.getElementById('grid-columns').value;
+            const rows = document.getElementById('grid-rows').value;
+            const justifyItems = document.getElementById('grid-justify-items').value;
+            const alignItems = document.getElementById('grid-align-items').value;
+            const gap = document.getElementById('grid-gap').value;
+            const itemsCount = document.getElementById('grid-items-count').value;
+
+            // Update range value displays
+            document.getElementById('grid-gap-value').textContent = `${gap}px`;
+            document.getElementById('grid-items-value').textContent = `${itemsCount} itens`;
+
+            // Apply styles
+            container.style.gridTemplateColumns = columns;
+            container.style.gridTemplateRows = rows;
+            container.style.justifyItems = justifyItems;
+            container.style.alignItems = alignItems;
+            container.style.gap = `${gap}px`;
+
+            // Update items count
+            const currentItems = container.children.length;
+            if (currentItems < itemsCount) {
+                for (let i = currentItems; i < itemsCount; i++) {
+                    const item = document.createElement('div');
+                    item.className = 'grid-item';
+                    item.textContent = i + 1;
+                    container.appendChild(item);
+                }
+            } else if (currentItems > itemsCount) {
+                for (let i = currentItems; i > itemsCount; i--) {
+                    container.removeChild(container.lastChild);
+                }
+            }
+
+            // Update code display
+            code.textContent = `.container {
+    display: grid;
+    grid-template-columns: ${columns};
+    grid-template-rows: ${rows};
+    justify-items: ${justifyItems};
+    align-items: ${alignItems};
+    gap: ${gap}px;
+}`;
+        }
+
+        // Show practical example
+        function showPracticalExample() {
+            const example = document.getElementById('practical-example');
+            const btn = event.target;
+
+            if (example.style.display === 'none') {
+                example.style.display = 'block';
+                btn.textContent = 'Ocultar Exemplo';
+                btn.classList.add('active');
+            } else {
+                example.style.display = 'none';
+                btn.textContent = 'Ver Exemplo Prático';
+                btn.classList.remove('active');
+            }
+        }
+
+        // Show solutions for challenges
+        function showSolution(number) {
+            const solution = document.getElementById(`solution-${number}`);
+            const btn = event.target;
+
+            if (solution.style.display === 'none') {
+                solution.style.display = 'block';
+                btn.textContent = 'Ocultar Solução';
+                btn.classList.add('active');
+            } else {
+                solution.style.display = 'none';
+                btn.textContent = 'Ver Solução';
+                btn.classList.remove('active');
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function () {
+            updateFlexbox();
+            updateGrid();
+
+            // Add interactive hover effects to sections
+            document.querySelectorAll('.guide-section').forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.1}s`;
+            });
+
+            // Add smooth transitions to all buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            // Add keyboard support
+            document.addEventListener('keydown', function (e) {
+                if (e.key === '1') switchTab('flexbox');
+                if (e.key === '2') switchTab('grid');
+                if (e.key === '3') switchTab('comparison');
+            });
+        });
+
+        // Real-time property explanations
+        function showPropertyInfo(property, description) {
+            // This could be expanded to show tooltips or info panels
+            console.log(`${property}: ${description}`);
+        }
+
+        // Add resize observer to show responsiveness
+        if (window.ResizeObserver) {
+            const resizeObserver = new ResizeObserver(entries => {
+                entries.forEach(entry => {
+                    const width = entry.contentRect.width;
+                    let deviceType = '';
+                    if (width <= 768) {
+                        deviceType = '📱 Mobile';
+                    } else if (width <= 1024) {
+                        deviceType = '📱 Tablet';
+                    } else {
+                        deviceType = '💻 Desktop';
+                    }
+
+                    // Update any size indicators if they exist
+                    const indicators = document.querySelectorAll('.size-indicator');
+                    indicators.forEach(indicator => {
+                        indicator.textContent = `${Math.round(width)}px - ${deviceType}`;
+                    });
+                });
+            });
+
+            resizeObserver.observe(document.body);
+        }
+
+        // Auto-save user preferences (using sessionStorage since localStorage not available)
+        function savePreferences() {
+            const preferences = {
+                flexDirection: document.getElementById('flex-direction').value,
+                justifyContent: document.getElementById('justify-content').value,
+                alignItems: document.getElementById('align-items').value,
+                flexWrap: document.getElementById('flex-wrap').value,
+                flexGap: document.getElementById('flex-gap').value,
+                flexItems: document.getElementById('flex-items-count').value,
+                gridColumns: document.getElementById('grid-columns').value,
+                gridRows: document.getElementById('grid-rows').value,
+                gridJustifyItems: document.getElementById('grid-justify-items').value,
+                gridAlignItems: document.getElementById('grid-align-items').value,
+                gridGap: document.getElementById('grid-gap').value,
+                gridItems: document.getElementById('grid-items-count').value
+            };
+
+            // Store in memory for this session
+            window.userPreferences = preferences;
+        }
+
+        // Load preferences (if they exist)
+        function loadPreferences() {
+            if (window.userPreferences) {
+                const prefs = window.userPreferences;
+                document.getElementById('flex-direction').value = prefs.flexDirection || 'row';
+                document.getElementById('justify-content').value = prefs.justifyContent || 'flex-start';
+                document.getElementById('align-items').value = prefs.alignItems || 'stretch';
+                document.getElementById('flex-wrap').value = prefs.flexWrap || 'nowrap';
+                document.getElementById('flex-gap').value = prefs.flexGap || '10';
+                document.getElementById('flex-items-count').value = prefs.flexItems || '5';
+                document.getElementById('grid-columns').value = prefs.gridColumns || '1fr 1fr';
+                document.getElementById('grid-rows').value = prefs.gridRows || 'auto';
+                document.getElementById('grid-justify-items').value = prefs.gridJustifyItems || 'stretch';
+                document.getElementById('grid-align-items').value = prefs.gridAlignItems || 'stretch';
+                document.getElementById('grid-gap').value = prefs.gridGap || '10';
+                document.getElementById('grid-items-count').value = prefs.gridItems || '6';
+            }
+        }
+
+        // Save preferences when controls change
+        document.addEventListener('change', savePreferences);
+        document.addEventListener('input', savePreferences);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.cdnfonts.com/css/dock11" rel="stylesheet">
+</head>
+
+<body>
+    <div class="outer-wrapper">
+        <div class="wrapper">
+            <div class="slide one">
+                <div class="background-text">BEM-VINDOS.</div>
+            </div>
+            <div class="slide two">
+                <div class="card rgb" data-tilt data-tilt-scale="1.1" data-tilt-speed="3000" data-tilt-glare
+                    data-tilt-max-glare="0.5">
+                    <div class="card-image1"></div>
+                    <div class="card-text">
+                        <span class="date">Gratuito</span>
+                        <h2>Guia Interativo de Responsividade</h2>
+                        <p>Aprenda a criar sites responsivos com exemplos práticos e código real.</p>
+                    </div>
+                    <div class="card-button">
+                        <a href="guia1.html" target="_blank" rel="noopener"><button>Ver mais</button></a>
+                    </div>
+                </div>
+                <div class="card rgb" data-tilt data-tilt-scale="1.1" data-tilt-speed="3000" data-tilt-glare
+                    data-tilt-max-glare="0.5">
+                    <div class="card-image2"></div>
+                    <div class="card-text">
+                        <span class="date">Gratuito</span>
+                        <h2>Guia Interativo de Animações CSS</h2>
+                        <p>Aprenda a animar elementos com CSS de forma prática e visual.</p>
+                    </div>
+                    <div class="card-button">
+                        <a href="guia2.html" target="_blank" rel="noopener"></a><button>Ver mais</button>
+                    </div>
+                </div>
+                <div class="card rgb" data-tilt data-tilt-scale="1.1" data-tilt-speed="3000" data-tilt-glare
+                    data-tilt-max-glare="0.5">
+                    <div class="card-image3"></div>
+                    <div class="card-text">
+                        <span class="date">Gratuito</span>
+                        <h2>Guia Interativo de Flexbox e Grid</h2>
+                        <p>Domine layouts modernos com visualizadores interativos e controles em tempo real.</p>
+                    </div>
+                    <div class="card-button">
+                        <a href="guia3.html" target="_blank" rel="noopener"></a><button>Ver mais</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slide three">
+                <div class="card rgb wide-card" data-tilt data-tilt-scale="1.1" data-tilt-speed="3000" data-tilt-glare
+                    data-tilt-max-glare="0.5">
+                    <div class="card-text">
+                        <span class="date">Contato</span>
+                        <h2>Envie uma mensagem</h2>
+                        <form class="contact-form" id="contactForm">
+                            <input type="text" name="name" placeholder="Seu nome" required>
+                            <input type="email" name="email" placeholder="Seu email" required>
+                            <textarea name="message" placeholder="Sua mensagem" rows="3" required></textarea>
+                            <button type="submit">Enviar</button>
+                        </form>
+                        <div id="formStatus"></div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                document.getElementById('contactForm').addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    // You need a backend to send emails. Example using Formspree:
+                    fetch('https://formspree.io/f/yourFormID', {
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json' },
+                        body: new FormData(this)
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                document.getElementById('formStatus').textContent = 'Mensagem enviada com sucesso!';
+                                this.reset();
+                            } else {
+                                document.getElementById('formStatus').textContent = 'Erro ao enviar. Tente novamente.';
+                            }
+                        })
+                        .catch(() => {
+                            document.getElementById('formStatus').textContent = 'Erro ao enviar. Tente novamente.';
+                        });
+                });
+            </script>
+</body>
+
+<script src="vanilla-tilt.min.js"></script>
+<script type="module" src="app.js"></script>
+
+</html>

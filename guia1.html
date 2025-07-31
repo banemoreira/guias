@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo de Responsividade</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .guide-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .guide-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            color: #4a5568;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: 'CSS';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .code-block.html::before {
+            content: 'HTML';
+            background: #e53e3e;
+        }
+
+        .code-block.js::before {
+            content: 'JS';
+            background: #f6e05e;
+            color: #2d3748;
+        }
+
+        .toggle-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .toggle-btn.active {
+            background: #38a169;
+            box-shadow: 0 4px 15px rgba(56, 161, 105, 0.4);
+        }
+
+        /* Demonstrações específicas */
+        .flex-demo {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .flex-item {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .flex-item:hover {
+            transform: scale(1.05);
+            background: #5a67d8;
+        }
+
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-item {
+            background: #38a169;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(56, 161, 105, 0.3);
+        }
+
+        .viewport-simulator {
+            border: 3px solid #4a5568;
+            border-radius: 10px;
+            background: white;
+            margin: 20px 0;
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .simulator-content {
+            padding: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .size-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .responsive-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .responsive-image:hover {
+            transform: scale(1.02);
+        }
+
+        /* Media Queries para demonstração */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .guide-section {
+                padding: 20px;
+            }
+
+            .flex-item {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .code-block {
+                font-size: 12px;
+                padding: 15px;
+            }
+        }
+
+        /* Animações */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .guide-section {
+            animation: slideIn 0.6s ease-out;
+        }
+
+        /* Utilities */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Estilos específicos para o menu responsivo */
+        /* Estilo base */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Botão hambúrguer */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger .bar {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+        }
+
+        /* Estilo mobile */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #333;
+                width: 200px;
+                padding: 10px;
+                border-radius: 5px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>📱 Guia Interativo de Responsividade</h1>
+            <p>Aprenda a criar sites responsivos com exemplos práticos e código real</p>
+        </header>
+        <!-- Seção 1: Meta Viewport -->
+        <section class="guide-section">
+            <h2 class="section-title">1. Meta Viewport - A Base da Responsividade</h2>
+            <p>O meta viewport é essencial para que o site funcione corretamente em dispositivos móveis. Sem ele, o site
+                será exibido como se fosse desktop.</p>
+            <div class="code-block html">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            </div>
+            <div class="demo-area">
+                <strong>Demonstração:</strong> Esta página já usa o meta viewport correto. Experimente redimensionar a
+                janela do navegador para ver a diferença!
+            </div>
+        </section>
+        <!-- Seção 2: Unidades Relativas -->
+        <section class="guide-section">
+            <h2 class="section-title">2. Unidades Relativas vs Absolutas</h2>
+            <p>Use unidades relativas (%, em, rem, vw, vh) em vez de pixels fixos para criar layouts flexíveis.</p>
+            <div class="code-block">
+                /* ❌ Unidades fixas */
+                .container {
+                width: 960px;
+                font-size: 16px;
+                }
+                /* ✅ Unidades relativas */
+                .container {
+                width: 90%;
+                max-width: 1200px;
+                font-size: 1rem;
+                }
+            </div>
+            <div class="demo-area">
+                <div id="unitsDemo"
+                    style="background: #667eea; color: white; padding: 20px; border-radius: 8px; width: 80%; margin: 0 auto; text-align: center;">
+                    <h3>Exemplo com 80% de largura</h3>
+                    <p>Este elemento se adapta automaticamente</p>
+                </div>
+            </div>
+        </section>
+        <!-- Seção 3: Flexbox -->
+        <section class="guide-section">
+            <h2 class="section-title">3. Flexbox - Layout Flexível</h2>
+            <p>O Flexbox é perfeito para criar layouts que se adaptam a diferentes tamanhos de tela.</p>
+            <div class="code-block">
+                .flex-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: space-between;
+                }
+                .flex-item {
+                flex: 1;
+                min-width: 200px;
+                }
+            </div>
+            <button class="toggle-btn" onclick="toggleFlexDirection()">Alterar Direção</button>
+            <button class="toggle-btn" onclick="toggleFlexWrap()">Toggle Wrap</button>
+            <div class="demo-area">
+                <div id="flexDemo" class="flex-demo">
+                    <div class="flex-item">Item 1</div>
+                    <div class="flex-item">Item 2</div>
+                    <div class="flex-item">Item 3</div>
+                </div>
+            </div>
+        </section>
+        <!-- Seção 4: CSS Grid -->
+        <section class="guide-section">
+            <h2 class="section-title">4. CSS Grid - Layout em Grade</h2>
+            <p>O CSS Grid é ideal para layouts complexos e bidimensionais que precisam se adaptar.</p>
+            <div class="code-block">
+                .grid-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                }
+            </div>
+            <button class="toggle-btn" onclick="changeGridColumns(2)">2 Colunas</button>
+            <button class="toggle-btn" onclick="changeGridColumns(3)">3 Colunas</button>
+            <button class="toggle-btn" onclick="changeGridColumns('auto')">Auto-fit</button>
+            <div class="demo-area">
+                <div id="gridDemo" class="grid-demo">
+                    <div class="grid-item">Card 1</div>
+                    <div class="grid-item">Card 2</div>
+                    <div class="grid-item">Card 3</div>
+                    <div class="grid-item">Card 4</div>
+                </div>
+            </div>
+        </section>
+        <!-- Seção 5: Media Queries -->
+        <section class="guide-section">
+            <h2 class="section-title">5. Media Queries - Pontos de Quebra</h2>
+            <p>Use media queries para aplicar estilos específicos em diferentes tamanhos de tela.</p>
+            <div class="code-block">
+                /* Mobile First */
+                .container {
+                padding: 10px;
+                }
+                /* Tablet */
+                @media (min-width: 768px) {
+                .container {
+                padding: 20px;
+                }
+                }
+                /* Desktop */
+                @media (min-width: 1024px) {
+                .container {
+                padding: 40px;
+                }
+                }
+            </div>
+            <div class="demo-area">
+                <p><strong>Pontos de quebra comuns:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>📱 Mobile: até 767px</li>
+                    <li>📱 Tablet: 768px - 1023px</li>
+                    <li>💻 Desktop: 1024px+</li>
+                </ul>
+            </div>
+        </section>
+        <!-- Seção 6: Simulador de Viewport -->
+        <section class="guide-section">
+            <h2 class="section-title">6. Simulador de Dispositivos</h2>
+            <p>Veja como o layout se comporta em diferentes tamanhos de tela.</p>
+            <button class="toggle-btn" onclick="simulateDevice('mobile')">📱 Mobile (375px)</button>
+            <button class="toggle-btn" onclick="simulateDevice('tablet')">📱 Tablet (768px)</button>
+            <button class="toggle-btn" onclick="simulateDevice('desktop')">💻 Desktop (1200px)</button>
+            <div class="demo-area">
+                <div id="viewportSimulator" class="viewport-simulator" style="width: 100%;">
+                    <div class="size-indicator" id="sizeIndicator">1200px</div>
+                    <div class="simulator-content">
+                        <h3>Layout Responsivo</h3>
+                        <p>Observe como o conteúdo se adapta</p>
+                        <div
+                            style="margin-top: 20px; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px;">
+                            <p>Este é um exemplo de conteúdo que se adapta ao tamanho da tela.</p>
+                            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+                                <div style="width: 80px; height: 80px; background: #667eea; border-radius: 50%;"></div>
+                                <div style="width: 80px; height: 80px; background: #764ba2; border-radius: 50%;"></div>
+                                <div style="width: 80px; height: 80px; background: #38a169; border-radius: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Seção 7: Imagens Responsivas -->
+        <section class="guide-section">
+            <h2 class="section-title">7. Imagens Responsivas</h2>
+            <p>Imagens devem se adaptar ao container e carregar adequadamente em diferentes dispositivos.</p>
+            <div class="code-block">
+                /* Imagem responsiva básica */
+                img {
+                max-width: 100%;
+                height: auto;
+                }
+                /* Usando srcset para diferentes densidades */
+                img src="image.jpg" srcset="image-1x.jpg 1x, image-2x.jpg 2x" alt="Descrição da imagem"
+            </div>
+            <div class="demo-area">
+                <div
+                    style="width: 100%; max-width: 500px; margin: 0 auto; border: 2px solid #ddd; border-radius: 8px; overflow: hidden;">
+                    <div
+                        style="width: 100%; height: 200px; background: linear-gradient(45deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
+                        <img src="image.jpg" srcset="image-1x.jpg 1x, image-2x.jpg 2x" alt="Descrição da imagem" style="max-width: 100%;
+                height: auto; padding-bottom: 10px;">
+                    </div>
+                    <div style="padding: 30px; background: #f8f9fa;">
+                        <p style="margin: 0; text-align: center;">Esta imagem se adapta ao tamanho do contêiner</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Seção 8: Navegação Responsiva -->
+        <section class="guide-section">
+            <h2 class="section-title">8. Menu de Navegação Responsivo</h2>
+            <p>Crie menus que se transformam em mobile com JavaScript.</p>
+            <div class="code-block js">
+                function toggleMobileMenu() {
+                const menu = document.querySelector('.nav-menu');
+                const hamburger = document.querySelector('.hamburger');
+                menu.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                }
+            </div>
+            <div class="demo-area">
+                <nav class="navbar">
+                    <div class="nav-brand">Logo</div>
+                    <ul class="nav-menu">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Sobre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Serviços</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Contato</a>
+                        </li>
+                    </ul>
+                    <div class="hamburger" onclick="toggleMobileMenu()">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </div>
+                </nav>
+            </div>
+        </section>
+        <!-- Seção 9: Dicas Finais -->
+        <section class="guide-section">
+            <h2 class="section-title">9. Checklist de Responsividade</h2>
+            <div style="background: #f0fff4; border-left: 4px solid #38a169; padding: 20px; border-radius: 8px;">
+                <h3 style="color: #38a169; margin-bottom: 15px;">✅ Checklist Essencial:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                    <div>
+                        <strong>HTML:</strong>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Meta viewport configurado</li>
+                            <li>Estrutura semântica</li>
+                            <li>Alt text em imagens</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>CSS:</strong>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Box-sizing: border-box</li>
+                            <li>Unidades relativas</li>
+                            <li>Media queries</li>
+                            <li>Flexbox/Grid</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>Teste:</strong>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Diferentes dispositivos</li>
+                            <li>Orientação landscape/portrait</li>
+                            <li>Velocidade de carregamento</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <div class="container text-center">
+            <p style="color: white; margin-top: 20px;">© 2025 Guia Interativo de Responsividade. Todos os direitos
+                reservados.</p>
+            <p style="color: white;">Feito com ❤️ para desenvolvedores web por: <b>Carlos Moreira</b></p>
+        </div>
+    </footer>
+    <script>
+        // Flexbox controls
+        function toggleFlexDirection() {
+            const flexDemo = document.getElementById('flexDemo');
+            const currentDirection = flexDemo.style.flexDirection;
+            flexDemo.style.flexDirection = currentDirection === 'column' ? 'row' : 'column';
+        }
+        function toggleFlexWrap() {
+            const flexDemo = document.getElementById('flexDemo');
+            const currentWrap = flexDemo.style.flexWrap;
+            flexDemo.style.flexWrap = currentWrap === 'nowrap' ? 'wrap' : 'nowrap';
+        }
+        // Grid controls
+        function changeGridColumns(columns) {
+            const gridDemo = document.getElementById('gridDemo');
+            if (columns === 'auto') {
+                gridDemo.style.gridTemplateColumns = 'repeat(auto-fit, minmax(250px, 1fr))';
+            } else {
+                gridDemo.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+            }
+        }
+        // Viewport simulator
+        function simulateDevice(device) {
+            const simulator = document.getElementById('viewportSimulator');
+            const indicator = document.getElementById('sizeIndicator');
+            switch (device) {
+                case 'mobile':
+                    simulator.style.width = '375px';
+                    simulator.style.margin = '0 auto';
+                    indicator.textContent = '375px (Mobile)';
+                    break;
+                case 'tablet':
+                    simulator.style.width = '768px';
+                    simulator.style.margin = '0 auto';
+                    indicator.textContent = '768px (Tablet)';
+                    break;
+                case 'desktop':
+                    simulator.style.width = '100%';
+                    simulator.style.margin = '0';
+                    indicator.textContent = '1200px (Desktop)';
+                    break;
+            }
+        }
+        // Mobile menu demo
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+        // Add smooth scrolling to buttons
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                this.classList.add('active');
+                setTimeout(() => {
+                    this.classList.remove('active');
+                }, 300);
+            });
+        });
+        // Real-time window size indicator
+        function updateWindowSize() {
+            const width = window.innerWidth;
+            let deviceType = '';
+            if (width <= 767) {
+                deviceType = '📱 Mobile';
+            } else if (width <= 1023) {
+                deviceType = '📱 Tablet';
+            } else {
+                deviceType = '💻 Desktop';
+            }
+            // Update all size indicators
+            document.querySelectorAll('.size-indicator').forEach(indicator => {
+                if (indicator.id !== 'sizeIndicator') {
+                    indicator.textContent = `${width}px - ${deviceType}`;
+                }
+            });
+        }
+        // Add size indicators to demo areas
+        document.querySelectorAll('.demo-area').forEach(area => {
+            const indicator = document.createElement('div');
+            indicator.className = 'size-indicator';
+            indicator.style.position = 'absolute';
+            indicator.style.top = '10px';
+            indicator.style.right = '10px';
+            indicator.style.background = 'rgba(0,0,0,0.7)';
+            indicator.style.color = 'white';
+            indicator.style.padding = '5px 10px';
+            indicator.style.borderRadius = '5px';
+            indicator.style.fontSize = '12px';
+            indicator.style.zIndex = '10';
+            area.style.position = 'relative';
+            area.appendChild(indicator);
+        });
+        // Update on load and resize
+        window.addEventListener('load', updateWindowSize);
+        window.addEventListener('resize', updateWindowSize);
+        // Add interactive hover effects
+        document.querySelectorAll('.guide-section').forEach((section, index) => {
+            section.style.animationDelay = `${index * 0.1}s`;
+        });
+        // Atualiza os blocos de código para mostrar o código real usado nas demos
+        function updateCodeBlocks() {
+            // Flexbox
+            const flexDemo = document.getElementById('flexDemo');
+            const flexCodeBlock = flexDemo.parentElement.parentElement.querySelector('.code-block');
+            const flexDirection = flexDemo.style.flexDirection || 'row';
+            const flexWrap = flexDemo.style.flexWrap || 'wrap';
+            flexCodeBlock.textContent =
+                `.flex-container {\n  display: flex;\n  flex-wrap: ${flexWrap};\n  gap: 20px;\n  justify-content: space-between;\n  flex-direction: ${flexDirection};\n}\n.flex-item {\n  flex: 1;\n  min-width: 200px;\n}`;
+
+            // Grid
+            const gridDemo = document.getElementById('gridDemo');
+            const gridCodeBlock = gridDemo.parentElement.parentElement.querySelector('.code-block');
+            const gridTemplateColumns = gridDemo.style.gridTemplateColumns || 'repeat(auto-fit, minmax(250px, 1fr))';
+            gridCodeBlock.textContent =
+                `.grid-container {\n  display: grid;\n  grid-template-columns: ${gridTemplateColumns};\n  gap: 20px;\n}`;
+
+            // Viewport Simulator
+            const simulator = document.getElementById('viewportSimulator');
+            const viewportSection = simulator.parentElement.parentElement;
+            const viewportCodeBlock = viewportSection.querySelector('.code-block');
+            let width = simulator.style.width || '100%';
+            viewportCodeBlock.textContent =
+                `#viewportSimulator {\n  width: ${width};\n  border: 3px solid #4a5568;\n  border-radius: 10px;\n  background: white;\n}`;
+
+            // Imagem Responsiva
+            const imgDemo = viewportSection.nextElementSibling.querySelector('img');
+            const imgCodeBlock = viewportSection.nextElementSibling.querySelector('.code-block');
+            imgCodeBlock.textContent =
+                `img {\n  max-width: 100%;\n  height: auto;\n}\n<img src="${imgDemo.getAttribute('src')}" srcset="${imgDemo.getAttribute('srcset')}" alt="${imgDemo.getAttribute('alt')}">`;
+        }
+
+        // Atualiza os blocos de código ao interagir
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', updateCodeBlocks);
+        });
+
+        // Atualiza ao carregar
+        window.addEventListener('load', updateCodeBlocks);
+    </script>
+</body>
+
+</html>
