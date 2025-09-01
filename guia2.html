@@ -811,6 +811,12 @@
             <h2 class="section-title">9. Botões Interativos</h2>
             <p>Botões com animações chamam mais atenção e melhoram a experiência do utilizador.</p>
             <div class="demo-area">
+                <div class="button-controls" style="margin-bottom: 20px;">
+                    <button class="toggle-btn active" onclick="demonstrateButton('default', this)">Padrão</button>
+                    <button class="toggle-btn" onclick="demonstrateButton('success', this)">Sucesso</button>
+                    <button class="toggle-btn" onclick="demonstrateButton('warning', this)">Aviso</button>
+                    <button class="toggle-btn" onclick="demonstrateButton('danger', this)">Perigo</button>
+                </div>
                 <button class="animated-button">Botão Animado</button>
                 <button class="animated-button" style="background: linear-gradient(45deg, #38a169, #68d391);">Outro
                     Estilo</button>
@@ -1317,6 +1323,104 @@
         from, to { border-color: transparent; }
         50% { border-color: #667eea; }
     }`);
+        }
+
+        // Section 9: Botões Interativos - adicione uma função para demonstrar diferentes estilos
+        function demonstrateButton(style, button) {
+            const demoButtons = document.querySelectorAll('.guide-section:nth-of-type(9) .animated-button');
+            let cssCode = '';
+
+            switch (style) {
+                case 'default':
+                    demoButtons.forEach(btn => {
+                        btn.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+                        btn.style.transform = 'translateY(0)';
+                    });
+                    cssCode = `.animated-button {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.animated-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.animated-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.animated-button:hover::before {
+    left: 100%;
+}`;
+                    break;
+                case 'success':
+                    demoButtons.forEach(btn => {
+                        btn.style.background = 'linear-gradient(45deg, #38a169, #68d391)';
+                        btn.style.transform = 'translateY(0)';
+                    });
+                    cssCode = `.animated-button.success {
+    background: linear-gradient(45deg, #38a169, #68d391);
+    box-shadow: 0 4px 15px rgba(56, 161, 105, 0.4);
+}
+
+.animated-button.success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(56, 161, 105, 0.6);
+}`;
+                    break;
+                case 'warning':
+                    demoButtons.forEach(btn => {
+                        btn.style.background = 'linear-gradient(45deg, #ed8936, #f6ad55)';
+                        btn.style.transform = 'translateY(0)';
+                    });
+                    cssCode = `.animated-button.warning {
+    background: linear-gradient(45deg, #ed8936, #f6ad55);
+    box-shadow: 0 4px 15px rgba(237, 137, 54, 0.4);
+}
+
+.animated-button.warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(237, 137, 54, 0.6);
+}`;
+                    break;
+                case 'danger':
+                    demoButtons.forEach(btn => {
+                        btn.style.background = 'linear-gradient(45deg, #e53e3e, #fc8181)';
+                        btn.style.transform = 'translateY(0)';
+                    });
+                    cssCode = `.animated-button.danger {
+    background: linear-gradient(45deg, #e53e3e, #fc8181);
+    box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4);
+}
+
+.animated-button.danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(229, 62, 62, 0.6);
+}`;
+                    break;
+            }
+
+            updateCodeBlock(9, cssCode);
+
+            // Atualizar estado do botão ativo
+            const buttons = document.querySelectorAll('.guide-section:nth-of-type(9) .toggle-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
         }
 
         // Section 10: Entrance - atualiza código conforme direção
